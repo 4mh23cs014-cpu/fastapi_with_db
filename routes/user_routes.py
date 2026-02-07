@@ -12,6 +12,10 @@ router = APIRouter()
 def signup(user: User_schemas, db: Session = Depends(get_db)):
     user_repository = UserRepository(db)
     # Convert Pydantic schema to SQLAlchemy model
+    exitsting_user = user_repository.get_user_by_email(user.email)
+    if exitsting_user:
+        return HTTPException(status_code=400, detail="User already exists")   
+    
     db_user = User(email=user.email, password=user.password)
     user_repository.add_user(db_user)
     return {"message": "User signed up successfully"}

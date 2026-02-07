@@ -14,7 +14,10 @@ if DATABASE_URL:
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
 print("DAT  ABASE_URL",DATABASE_URL)
 
-if DATABASE_URL and DATABASE_URL.startswith("sqlite"):
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
+if DATABASE_URL.startswith("sqlite"):
     engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
 else:
     engine = create_engine(DATABASE_URL, connect_args={"sslmode": "require"})
