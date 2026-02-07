@@ -14,7 +14,7 @@ def signup(user: User_schemas, db: Session = Depends(get_db)):
     # Convert Pydantic schema to SQLAlchemy model
     exitsting_user = user_repository.get_user_by_email(user.email)
     if exitsting_user:
-        raiseHTTPException(status_code=400, detail="User already exists")   
+        raise  HTTPException(status_code=400, detail="User already exists")   
     
     db_user = User(email=user.email, password=user.password)
     user_repository.add_user(db_user)
