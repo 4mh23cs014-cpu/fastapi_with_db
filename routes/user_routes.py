@@ -5,7 +5,7 @@ from models import User
 from repository.user_repository import UserRepository
 from schemas.user_schemas import User_schemas
 from schemas.token_schemas import Token, TokenData, LoginRequest
-from jwt_handler import create_tokens,verify_token
+from utils.jwt_handler import create_tokens, verify_token
 
 router = APIRouter()
 
