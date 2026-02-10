@@ -6,12 +6,11 @@ from db import get_db,DATABASE_URL
 from sqlalchemy import create_engine
 import os
 from models import Base
-
 app = FastAPI()
 
 app.include_router(user_router)
 app.include_router(ai_response_router)
-app.include_router(email_router)    
+app.include_router(email_router)
 #to create database
 
 engine=create_engine(DATABASE_URL)
@@ -22,5 +21,10 @@ def read_root():
     return {"Hello": "World"}
 
 
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, reload=True)
 
 

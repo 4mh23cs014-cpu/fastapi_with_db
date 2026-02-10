@@ -1,5 +1,5 @@
-from pydantic import BaseModel      
+from pydantic import BaseModel
 
-class User_schemas(BaseModel):
-     password: str
-     email: str
+class UserSchema(BaseModel):
+    email:str
+    password:str

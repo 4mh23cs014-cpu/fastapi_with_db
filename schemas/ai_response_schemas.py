@@ -5,4 +5,4 @@ class AIRequest(BaseModel):
     system_prompt: str = "You are a helpful assistant."
 
 class AIResponse(BaseModel):
-    response: str
+    response: str   

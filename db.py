@@ -1,31 +1,22 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
-load_dotenv()   
+Base=declarative_base() 
 
-Base=declarative_base()
+DATABASE_URL=os.getenv("DATABASE_URL")
+print("DATABASE_URL",DATABASE_URL)
+#create engine once at module level
+engine=create_engine(DATABASE_URL)
 
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-if DATABASE_URL:
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://")
-print("DAT  ABASE_URL",DATABASE_URL)
-
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL environment variable is not set")
-
-if DATABASE_URL.startswith("sqlite"):
-    engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
-else:
-    engine = create_engine(DATABASE_URL, connect_args={"sslmode": "require"})
-sessionlocal=sessionmaker(autocommit=False,autoflush=False,bind=engine) 
-
+#create sessionaLocal class for creatimg database sessions
+SessionLocal=sessionmaker(autocommit=False, autoflush=False, bind=engine)
 def get_db():
-    db =    sessionlocal()    
+    db=SessionLocal()
     try:
         yield db
     finally:
-        db.close()  
+        db.close()
