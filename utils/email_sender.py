@@ -15,8 +15,8 @@ def send_email(reciever_email:str, subject:str, content:str)->str:
     msg.set_content(content)
 
     # Send email
-    with smtplib.SMTP("smtp.gmail.com", 587) as server:
-        server.starttls()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        #server.starttls()
         server.login(sender_email, password)
         server.send_message(msg)
 
